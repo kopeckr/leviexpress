@@ -13,11 +13,13 @@ const App = () => (
   <>
     <Router>
       <Header title="Webová aplikace" />
-      <Link to="/">Home</Link>
-      <Link to="/reservation">Reservation</Link>
       <Switch>
-        <Route path="/a"> </Route>
-        <Route path="/reservation"> </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/reservation">
+          <Reservation />
+        </Route>
       </Switch>
       <Footer author="Martin Podloucký" />
     </Router>

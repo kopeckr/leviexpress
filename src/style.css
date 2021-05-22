@@ -101,7 +101,7 @@ label {
   text-decoration: none;
 } */
 
-.journey-picker {
+/* .journey-picker {
   margin: -2rem auto 0 auto;
   padding: 2rem;
 
@@ -137,7 +137,7 @@ label {
 .journey-picker__map {
   width: 26rem;
   height: auto;
-}
+} */
 
 .stops {
   margin-top: 2rem;
