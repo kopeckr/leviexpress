@@ -107,7 +107,7 @@ const JourneyPicker = ({ onJourneyChange }) => {
         </div>
       </div>
 
-      <div className="seat-picker container">
+      {/* <div className="seat-picker container">
         <h2>Vyberte sedadlo</h2>
         <div className="seats">
           <div className="seat-row">
@@ -136,7 +136,7 @@ const JourneyPicker = ({ onJourneyChange }) => {
         <button onClick={handleSubmit} className="btn" type="button">
           Rezervovat
         </button>
-      </div>
+      </div> */}
     </>
   );
 };
