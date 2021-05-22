@@ -15,14 +15,24 @@ const CityOptions = ({ cities }) => {
   );
 };
 
-const JourneyPicker = () => {
+const DateOptions = ({ dates }) => {
+  return (
+    <>
+      <option value="">Vyberte</option>
+      {dates.map((date) => (
+        <option key={date}>{date} </option>
+      ))}
+      ;
+    </>
+  );
+};
+
+const JourneyPicker = ({ onJourneyChange }) => {
   const [fromCity, setFromCity] = useState('');
   const [toCity, setToCity] = useState('');
   const [date, setDate] = useState('');
-  const [cities, setCities] = useState([
-    { name: 'Praha', code: 'CZ-PRG' },
-    { name: 'Brno', code: 'CZ-BRQ' },
-  ]);
+  const [cities, setCities] = useState([]);
+  const [dates, setDates] = useState([]);
 
   const handleFromCityChange = (event) => {
     setFromCity(event.target.value);
@@ -37,10 +47,12 @@ const JourneyPicker = () => {
   };
 
   const handleSubmit = (event) => {
-    console.log(fromCity);
-    console.log(toCity);
-    console.log(date);
-
+    fetch(
+      `https://leviexpress-backend.herokuapp.com/api/journey?fromCity=${fromCity}&toCity=${toCity}&date=${date}`,
+    )
+      .then((resp) => resp.json())
+      // .then((json) => console.log(json));
+      .then((json) => onJourneyChange(json.data));
     event.preventDefault();
   };
 
@@ -48,6 +60,10 @@ const JourneyPicker = () => {
     fetch('https://leviexpress-backend.herokuapp.com/api/cities')
       .then((resp) => resp.json())
       .then((json) => setCities(json.data));
+
+    fetch('https://leviexpress-backend.herokuapp.com/api/dates')
+      .then((resp) => resp.json())
+      .then((json) => setDates(json.data));
   }, []);
 
   return (
@@ -71,15 +87,18 @@ const JourneyPicker = () => {
             <label>
               <div className="journey-picker__label">Datum:</div>
               <select value={date} onChange={handleDateChange}>
-                <option value="">Vyberte</option>
-                <option>20.05.2021</option>
-                <option>21.05.2021</option>
-                <option>22.05.2021</option>
-                <option>23.05.2021</option>
+                <DateOptions dates={dates} />
               </select>
             </label>
             <div className="journey-picker__controls">
-              <button onClick={handleSubmit} className="btn" type="submit">
+              <button
+                disabled={
+                  fromCity === '' || toCity === '' || date === '' ? true : false
+                }
+                onClick={handleSubmit}
+                className="btn"
+                type="submit"
+              >
                 Vyhledat spoj
               </button>
             </div>
